@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hydro-image-pipeline"
+version = "0.1.0"
+description = "Camera-image workflow for discharge data acquisition, filtering, ROI preparation, feature extraction, and discharge prediction."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy",
+  "pandas",
+  "requests",
+  "opencv-python",
+  "Pillow",
+  "scikit-learn",
+  "torch",
+  "torchvision",
+]
+
+[project.scripts]
+hydro-prepare-data = "hydro_image_pipeline.get_data.prepare_data:main"
+hydro-filter-images = "hydro_image_pipeline.get_data.filter_images:main"
+hydro-select-roi-references = "hydro_image_pipeline.get_data.select_roi_reference_images:main"
+hydro-run-roi-variants = "hydro_image_pipeline.train.run_newroi_variants:main"
+hydro-run-sklearn-baselines = "hydro_image_pipeline.train.run_newroi_sklearn_baselines:main"
+hydro-run-best-pipeline = "hydro_image_pipeline.train.run_best_pipeline:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["hydro_image_pipeline*"]
+
+[tool.setuptools.package-data]
+hydro_image_pipeline = ["configs/*.csv", "configs/*.json", "train/*.json"]
